@@ -38,7 +38,6 @@ class LocationFragment : Fragment() {
     lateinit private var locationManager: LocationManager
     lateinit private var locationListener: LocationListener
     private lateinit var viewModel: LocationViewModel
-    var stringTest = "test"
     private val recyclerLocationAdapter = LocationRecyclerAdapter(WeatherModel(ArrayList<result>()))
     private lateinit var prefence: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
