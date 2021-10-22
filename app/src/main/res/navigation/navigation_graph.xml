@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/splashScreen2">
+
+    <fragment
+        android:id="@+id/nav_loc"
+        android:name="com.salih.weatherapp.view.LocationFragment"
+        android:label="fragment_location"
+        tools:layout="@layout/fragment_location">
+        <action
+            android:id="@+id/action_nav_loc_to_nav_selectedLocation"
+            app:destination="@id/nav_selectedLocation" />
+        <argument
+            android:name="cityname"
+            app:argType="string"
+            android:defaultValue="trabzon" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_selectedLocation"
+        android:name="com.salih.weatherapp.view.SelectedLocation"
+        android:label="fragment_selected_location"
+        tools:layout="@layout/fragment_selected_location">
+        <action
+            android:id="@+id/action_nav_selectedLocation_to_mapsFragment"
+            app:destination="@id/nav_maps" />
+        <argument android:name="cityname"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_maps"
+        android:name="com.salih.weatherapp.view.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_nav_selectedLocation"
+            app:destination="@id/nav_selectedLocation" />
+        <action
+            android:id="@+id/action_mapsFragment_to_nav_loc"
+            app:destination="@id/nav_loc" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashScreen2"
+        android:name="com.salih.weatherapp.view.SplashScreen"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreen2_to_nav_loc"
+            app:destination="@id/nav_loc" />
+    </fragment>
+</navigation>
