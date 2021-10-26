@@ -48,7 +48,7 @@ class LocationRecyclerAdapter(val weatherlist : WeatherModel) : RecyclerView.Ada
 
         if(weatherlist.result.get(position).status == "Clear"){
 
-             //holder.itemView.slIconView.downloadIcon("https://cdn-icons-png.flaticon.com/512/890/890347.png",
+             //holder.itemView.slIconView.downloadIcon(weatherlist.result.get(position).icon,
             //makeplaceholder(holder.itemView.context))
             holder.itemView.lIconView.setImageResource(R.drawable.clear)
 

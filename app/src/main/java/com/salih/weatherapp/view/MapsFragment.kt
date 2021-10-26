@@ -43,8 +43,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     lateinit private var locationListener: LocationListener
     lateinit private var mMap: GoogleMap
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,16 +50,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
 
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -74,22 +68,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
             override fun onLocationChanged(p0: Location) {
                 mMap.clear()
-                val currentLocation = LatLng(p0.latitude, p0.longitude)
-                //mMap.addMarker(MarkerOptions().position(currentLocation).title("guncelkonum"))
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15f))
-                //val geocoder = Geocoder(activity?.applicationContext, Locale.getDefault())
-
                 SearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                     override fun onQueryTextSubmit(query: String?): Boolean {
-
-                       // var location = SearchView.query.toString()
-                       // println(location)
-                        println("lol")
-
-                        //if (location != null || location != "")
-                       // {
                             val geocoder = Geocoder(activity?.applicationContext, Locale.getDefault())
-
                             val adressList1 = geocoder.getFromLocationName(query,1)
 
                             val adres = adressList1.get(0)
@@ -103,8 +84,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                                     findNavController().navigate(action)
                                 }*/
 
-
-                       // }
                         println(adres.adminArea)
                         return true
                     }
@@ -115,7 +94,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     }
 
                 })
-
 
                /* try {
                     val adressList = geocoder.getFromLocation(p0.latitude, p0.longitude, 1)
@@ -134,7 +112,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
                 */
             }
-
         }
         if (activity?.let {
                 ContextCompat.checkSelfPermission(
@@ -156,9 +133,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 val lastKnownLocationLatLng =
                     LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
             }
-
         }
-
     }
 
     override fun onRequestPermissionsResult(
@@ -185,8 +160,5 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
     }
-
-
 }

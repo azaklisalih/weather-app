@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -26,6 +27,7 @@ import com.salih.weatherapp.R
 import com.salih.weatherapp.adapter.LocationRecyclerAdapter
 import com.salih.weatherapp.model.WeatherModel
 import com.salih.weatherapp.model.result
+import com.salih.weatherapp.util.addLocation
 import com.salih.weatherapp.viewModel.LocationViewModel
 import kotlinx.android.synthetic.main.fragment_location.*
 import kotlinx.android.synthetic.main.l_recycler_row.*
@@ -44,7 +46,6 @@ class LocationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -67,49 +68,6 @@ class LocationFragment : Fragment() {
         var currentCity = ""
         var currentLng = ""
 
-       /* locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        locationListener = object : LocationListener {
-            override fun onLocationChanged(p0: Location) {
-
-                //val currentLocation = LatLng(p0.latitude, p0.longitude)
-                val geocoder = Geocoder(activity?.applicationContext, Locale.getDefault())
-
-                try {
-                    val adressList = geocoder.getFromLocation(p0.latitude, p0.longitude, 1)
-                    if (adressList.size > 0) {
-                        currentLng = adressList.get(0).locale.toString().substring(0, 1)
-                        prefence.edit().putString("lang", currentLng).apply()
-
-                        currentCity = adressList.get(0).adminArea.toString()
-                        prefence.edit().putString("cityname", currentCity).apply()
-                    }
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-        if (activity?.let {
-                ContextCompat.checkSelfPermission(
-                    it.applicationContext,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            } != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-        } else {
-            locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                1,
-                1000f,
-                locationListener
-            )
-            val lastKnownLocation =
-                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            if (lastKnownLocation != null) {
-                val lastKnownLocationLatLng =
-                    LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
-            }
-        }*/
 
         arguments?.let {
             currentCity = LocationFragmentArgs.fromBundle(it).cityname
@@ -132,58 +90,15 @@ class LocationFragment : Fragment() {
             lProgressBar.visibility = View.VISIBLE
             locationRecycler.visibility = View.GONE
             swipeRefleshLayout1.isRefreshing = false
-            locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            locationListener = object : LocationListener {
-                override fun onLocationChanged(p0: Location) {
 
-                    //val currentLocation = LatLng(p0.latitude, p0.longitude)
-                    val geocoder = Geocoder(activity?.applicationContext, Locale.getDefault())
+            prefence.edit().putString("cityname2",addLocation())
 
-                    try {
-                        val adressList = geocoder.getFromLocation(p0.latitude, p0.longitude, 1)
-                        if (adressList.size > 0) {
-                            currentLng = adressList.get(0).locale.toString().substring(0, 1)
-                            prefence.edit().putString("lang2", currentLng).apply()
-
-                            currentCity = adressList.get(0).adminArea.toString()
-                            prefence.edit().putString("cityname2", currentCity).apply()
-                        }
-
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-            if (activity?.let {
-                    ContextCompat.checkSelfPermission(
-                        it.applicationContext,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    )
-                } != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-            } else {
-                locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    1,
-                    1000f,
-                    locationListener
-                )
-                val lastKnownLocation =
-                    locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                if (lastKnownLocation != null) {
-                    val lastKnownLocationLatLng =
-                        LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
-                }
-            }
-            println("girdi2")
             var g_currentLng = prefence.getString("lang2", lang)
             var g_currentCity = prefence.getString("cityname2", cityname)
             if (g_currentCity != null && g_currentLng != null) {
-                println("girdi")
                 viewModel.refleshData(g_currentLng, g_currentCity)
                 recyclerLocationAdapter.changeLocation(g_currentCity)
             }
-
         }
 
         observeLiveData()
@@ -197,7 +112,6 @@ class LocationFragment : Fragment() {
                 lProgressBar.visibility = View.GONE
 
                 recyclerLocationAdapter.weatherListUpdate(it.result)
-
             }
         })
         viewModel.weatherLoading.observe(viewLifecycleOwner, Observer {
@@ -220,34 +134,5 @@ class LocationFragment : Fragment() {
             }
         })
     }
-
-    /*override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == 1) {
-            if (grantResults.size > 0) {
-                if (activity?.let {
-                        ContextCompat.checkSelfPermission(
-                            it.applicationContext,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        )
-                    } == PackageManager.PERMISSION_GRANTED) {
-                    locationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER,
-                        100000,
-                        100f,
-                        locationListener
-                    )
-                }
-            }
-        }
-
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-    }*/
-
 
 }

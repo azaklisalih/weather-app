@@ -52,14 +52,15 @@ class SelectedLocation : Fragment() {
         activity?.let {
             prefence = it.getSharedPreferences(it.packageName, Context.MODE_PRIVATE)
         }
-        var cityname = "trabzon"
+        var cityname = "Trabzon"
         val lang = "tr"
-        /* arguments?.let {
+        recyclerSelectedLocationAdapter.changeLocation(cityname)
+         /*arguments?.let {
              val currentcity = SelectedLocationArgs.fromBundle(it).cityname
              prefence.edit().putString("cityname2",currentcity).apply()
-         }
+         }*/
 
-         cityname = prefence.getString("cityname2","trabzon").toString()*/
+        // cityname = prefence.getString("cityname2","trabzon").toString()
 
         viewModel.refleshData(lang, cityname)
 
@@ -72,7 +73,7 @@ class SelectedLocation : Fragment() {
             selectedLocationRecycler.visibility = View.GONE
             swipeRefleshLayout2.isRefreshing = false
             viewModel.refleshData(lang, cityname)
-            sladress.text = cityname
+
         }
         observeLiveData()
 

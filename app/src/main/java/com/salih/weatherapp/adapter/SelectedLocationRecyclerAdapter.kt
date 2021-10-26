@@ -19,8 +19,12 @@ import java.util.*
 
 class SelectedLocationRecyclerAdapter(val weatherlist: WeatherModel) :
     RecyclerView.Adapter<SelectedLocationRecyclerAdapter.SlViewHolder>() {
+    var location = "trabzon"
     class SlViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+    }
+    fun changeLocation(location:String){
+        this.location = location
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlViewHolder {
@@ -48,6 +52,7 @@ class SelectedLocationRecyclerAdapter(val weatherlist: WeatherModel) :
         holder.itemView.slday.text = weatherlist.result.get(position).day
         //holder.itemView.sldate.text = weatherlist.result.get(position).date
         holder.itemView.slNight.text = weatherlist.result.get(position).night
+        holder.itemView.sladress.text = location
         //holder.itemView.slIconView.downloadIcon(weatherlist.result.get(position).icon,
         //makeplaceholder(holder.itemView.context))
 
