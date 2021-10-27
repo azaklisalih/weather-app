@@ -60,8 +60,8 @@ class SelectedLocation : Fragment() {
         arguments?.let {
             val currentcity = SelectedLocationArgs.fromBundle(it).cityname
             if(currentcity == "Trabzon"){
-                prefence.edit().putString("cityname4", addLocationSelected()).apply()
-                val city = prefence.getString("cityname4","ankara")
+                prefence.edit().putString("cityname2", addLocationSelected()).apply()
+                val city = prefence.getString("cityname2","ankara")
                 city?.let {
                     recyclerSelectedLocationAdapter.changeLocation(city)
                 }
@@ -72,7 +72,7 @@ class SelectedLocation : Fragment() {
 
         }
 
-        // cityname = prefence.getString("cityname2","trabzon").toString()
+         cityname = prefence.getString("cityname2","trabzon").toString()
 
         viewModel.refleshData(lang, cityname)
 
