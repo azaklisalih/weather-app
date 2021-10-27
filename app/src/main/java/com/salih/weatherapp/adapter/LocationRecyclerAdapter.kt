@@ -36,7 +36,6 @@ class LocationRecyclerAdapter(val weatherlist : WeatherModel) : RecyclerView.Ada
         holder.itemView.lStatus.text = weatherlist.result.get(position).status
         holder.itemView.ldegree.text = weatherlist.result.get(position).degree.substring(0,2) + "°C"
         holder.itemView.lday.text = weatherlist.result.get(position).day
-        //holder.itemView.ldate.text = weatherlist.result.get(position).date
         holder.itemView.lNight.text= weatherlist.result.get(position).night
         holder.itemView.ladress.text= location
         if (position != 0){
@@ -48,17 +47,13 @@ class LocationRecyclerAdapter(val weatherlist : WeatherModel) : RecyclerView.Ada
 
         if(weatherlist.result.get(position).status == "Clear"){
 
-             //holder.itemView.slIconView.downloadIcon(weatherlist.result.get(position).icon,
-            //makeplaceholder(holder.itemView.context))
             holder.itemView.lIconView.setImageResource(R.drawable.clear)
 
         }else if(weatherlist.result.get(position).status == "Rain"){
-            //holder.itemView.lIconView.downloadIcon("https://cdn-icons-png.flaticon.com/512/3217/3217172.png",
-            // makeplaceholder(holder.itemView.context))
+
             holder.itemView.lIconView.setImageResource(R.drawable.rain)
         }else if(weatherlist.result.get(position).status == "Clouds"){
-            //holder.itemView.lIconView.downloadIcon("https://cdn-icons-png.flaticon.com/512/1163/1163675.png",
-            //makeplaceholder(holder.itemView.context))
+
             holder.itemView.lIconView.setImageResource(R.drawable.clouds)
         } else{
              holder.itemView.lIconView.setImageResource(R.drawable.ic_launcher_foreground)
@@ -74,5 +69,4 @@ class LocationRecyclerAdapter(val weatherlist : WeatherModel) : RecyclerView.Ada
         weatherlist.result.addAll(newWeatherList)
         notifyDataSetChanged()
     }
-
 }

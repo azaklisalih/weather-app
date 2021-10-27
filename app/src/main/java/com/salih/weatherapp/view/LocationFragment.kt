@@ -68,32 +68,21 @@ class LocationFragment : Fragment() {
         var currentCity = ""
         var currentLng = ""
 
-
         arguments?.let {
             currentCity = LocationFragmentArgs.fromBundle(it).cityname
-            if(currentCity == "trabzon"){
-                prefence.edit().putString("cityname3", addLocation()).apply()
-                val city = prefence.getString("cityname3","ankara")
+            if (currentCity == "trabzon") {
+                prefence.edit().putString("citynameL", addLocation()).apply()
+                val city = prefence.getString("citynameL", "ankara")
                 city?.let {
                     recyclerLocationAdapter.changeLocation(city)
                 }
-            }else{
-                prefence.edit().putString("cityname", currentCity).apply()
+            } else {
+                prefence.edit().putString("citynameL", currentCity).apply()
                 recyclerLocationAdapter.changeLocation(currentCity)
             }
-
         }
-       /* if(arguments == null)
-        {
-            prefence.edit().putString("cityname3", addLocation()).apply()
-            var city = prefence.getString("cityname3","ankara")
-            if (city != null){
-                recyclerLocationAdapter.changeLocation(city)
-            }
 
-        }*/
-
-        var cityname = prefence.getString("cityname", "ankara")
+        var cityname = prefence.getString("citynameL", "ankara")
         var lang = prefence.getString("lang", "tr")
 
         if (lang != null && cityname != null) {
@@ -109,7 +98,7 @@ class LocationFragment : Fragment() {
             locationRecycler.visibility = View.GONE
             swipeRefleshLayout1.isRefreshing = false
 
-            prefence.edit().putString("cityname2",addLocation())
+            prefence.edit().putString("cityname2", addLocation())
 
             var g_currentLng = prefence.getString("lang2", lang)
             var g_currentCity = prefence.getString("cityname2", cityname)

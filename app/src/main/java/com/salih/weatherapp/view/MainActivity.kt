@@ -35,12 +35,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setupBottomNavMenu(navController: NavController){
+    private fun setupBottomNavMenu(navController: NavController) {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNav?.setupWithNavController(navController)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return item.onNavDestinationSelected(findNavController(R.id.nav_host_fragment)) || super.onOptionsItemSelected(item)
+        return item.onNavDestinationSelected(findNavController(R.id.nav_host_fragment)) || super.onOptionsItemSelected(
+            item
+        )
     }
 }

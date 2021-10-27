@@ -22,21 +22,21 @@ class LocationViewModel : ViewModel() {
     private val weatherAPIService = WeatherAPIService()
     private val disposable = CompositeDisposable()
 
-    fun refleshData(lang:String,cityName: String) {
-        UploadDataViaInternet(lang,cityName)
+    fun refleshData(lang: String, cityName: String) {
+        UploadDataViaInternet(lang, cityName)
     }
-    private fun UploadDataViaInternet(lang :String,cityName : String){
+
+    private fun UploadDataViaInternet(lang: String, cityName: String) {
         weatherLoading.value = true
         disposable.add(
-            weatherAPIService.getData(lang,cityName)
+            weatherAPIService.getData(lang, cityName)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<WeatherModel>(){
+                .subscribeWith(object : DisposableSingleObserver<WeatherModel>() {
                     override fun onSuccess(t: WeatherModel) {
                         weatherModel.value = t
                         weatherErrorMessage.value = false
                         weatherLoading.value = false
-
                     }
 
                     override fun onError(e: Throwable) {
@@ -48,10 +48,6 @@ class LocationViewModel : ViewModel() {
 
                 })
         )
-
     }
-
-
-
 }
 

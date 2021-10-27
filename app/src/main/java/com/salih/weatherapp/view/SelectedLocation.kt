@@ -16,7 +16,6 @@ import com.salih.weatherapp.R
 import com.salih.weatherapp.adapter.SelectedLocationRecyclerAdapter
 import com.salih.weatherapp.model.WeatherModel
 import com.salih.weatherapp.model.result
-import com.salih.weatherapp.util.addLocationSelected
 import com.salih.weatherapp.viewModel.SelectedLocationViewModel
 import kotlinx.android.synthetic.main.fragment_selected_location.*
 import kotlinx.android.synthetic.main.l_recycler_row.*
@@ -33,7 +32,6 @@ class SelectedLocation : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -42,7 +40,6 @@ class SelectedLocation : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_selected_location, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,26 +50,24 @@ class SelectedLocation : Fragment() {
         activity?.let {
             prefence = it.getSharedPreferences(it.packageName, Context.MODE_PRIVATE)
         }
-        var cityname = "Trabzon"
+        var cityname = ""
         val lang = "tr"
         recyclerSelectedLocationAdapter.changeLocation(cityname)
 
         arguments?.let {
             val currentcity = SelectedLocationArgs.fromBundle(it).cityname
-            if(currentcity == "Trabzon"){
-                prefence.edit().putString("cityname2", addLocationSelected()).apply()
-                val city = prefence.getString("cityname2","ankara")
+            if (currentcity == "Trabzon") {
+                val city = prefence.getString("citynameSL", "ankara")
                 city?.let {
                     recyclerSelectedLocationAdapter.changeLocation(city)
                 }
-            }else{
-                prefence.edit().putString("cityname2", currentcity).apply()
+            } else {
+                prefence.edit().putString("citynameSL", currentcity).apply()
                 recyclerSelectedLocationAdapter.changeLocation(currentcity)
             }
-
         }
 
-         cityname = prefence.getString("cityname2","trabzon").toString()
+        cityname = prefence.getString("citynameSL", "ankara").toString()
 
         viewModel.refleshData(lang, cityname)
 
@@ -85,7 +80,6 @@ class SelectedLocation : Fragment() {
             selectedLocationRecycler.visibility = View.GONE
             swipeRefleshLayout2.isRefreshing = false
             viewModel.refleshData(lang, cityname)
-
         }
         observeLiveData()
 
@@ -123,6 +117,4 @@ class SelectedLocation : Fragment() {
         })
 
     }
-
-
 }

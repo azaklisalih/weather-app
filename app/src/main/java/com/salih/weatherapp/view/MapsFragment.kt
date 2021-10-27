@@ -49,7 +49,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,49 +67,32 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
             override fun onLocationChanged(p0: Location) {
                 mMap.clear()
-                SearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                SearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
-                            val geocoder = Geocoder(activity?.applicationContext, Locale.getDefault())
-                            val adressList1 = geocoder.getFromLocationName(query,1)
+                        val geocoder = Geocoder(activity?.applicationContext, Locale.getDefault())
+                        val adressList1 = geocoder.getFromLocationName(query, 1)
 
-                            val adres = adressList1.get(0)
-                            var searchLatlng = LatLng(adres.latitude,adres.longitude)
-                            mMap.addMarker(MarkerOptions().position(searchLatlng).title("secili konum"))
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(searchLatlng, 15f))
+                        val adres = adressList1.get(0)
+                        var searchLatlng = LatLng(adres.latitude, adres.longitude)
+                        mMap.addMarker(MarkerOptions().position(searchLatlng).title("secili konum"))
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(searchLatlng, 15f))
 
-                                var currentcity = adres.adminArea
-                                if (currentcity != null){
-                                    val action = MapsFragmentDirections.actionMapsFragmentToNavSelectedLocation(currentcity)
-                                    findNavController().navigate(action)
-                                }
-
-                        println(adres.adminArea)
+                        var currentcity = adres.adminArea
+                        if (currentcity != null) {
+                            val action =
+                                MapsFragmentDirections.actionMapsFragmentToNavSelectedLocation(
+                                    currentcity
+                                )
+                            findNavController().navigate(action)
+                        }
                         return true
                     }
 
                     override fun onQueryTextChange(p0: String?): Boolean {
-                       println("girdi")
+                        println("girdi")
                         return false
                     }
-
                 })
-
-               /* try {
-                    val adressList = geocoder.getFromLocation(p0.latitude, p0.longitude, 1)
-                    if (adressList.size > 0) {
-                        currentLng = adressList.get(0).locale.toString().substring(0, 2)
-
-
-                        currentCity = adressList.get(0).adminArea.toString()
-                        println(currentCity)
-
-                    }
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-                */
             }
         }
         if (activity?.let {

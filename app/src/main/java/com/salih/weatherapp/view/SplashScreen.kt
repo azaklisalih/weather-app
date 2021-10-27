@@ -85,8 +85,8 @@ class SplashScreen : Fragment() {
                     LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
             }
         }
-
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -95,24 +95,20 @@ class SplashScreen : Fragment() {
         val view = inflater.inflate(R.layout.fragment_splash_screen, container, false)
 
         Handler(Looper.myLooper()!!).postDelayed({
-            var cityname =  prefence.getString("cityname1","ankara")
-            var c_cityname = prefence.getString("cityname1",cityname)
+            var cityname = prefence.getString("cityname1", "ankara")
+            var c_cityname = prefence.getString("cityname1", cityname)
 
-            if (c_cityname != null){
+            if (c_cityname != null) {
                 val action = SplashScreenDirections.actionSplashScreen2ToNavLoc(c_cityname)
                 findNavController().navigate(action)
             }
 
-        },1000)
-
-
+        }, 1000)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
     }
 
     override fun onRequestPermissionsResult(
