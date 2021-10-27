@@ -79,10 +79,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(searchLatlng, 15f))
 
                                 var currentcity = adres.adminArea
-                                /*if (currentcity != null){
+                                if (currentcity != null){
                                     val action = MapsFragmentDirections.actionMapsFragmentToNavSelectedLocation(currentcity)
                                     findNavController().navigate(action)
-                                }*/
+                                }
 
                         println(adres.adminArea)
                         return true

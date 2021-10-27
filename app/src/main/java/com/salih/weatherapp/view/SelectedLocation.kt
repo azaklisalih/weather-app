@@ -16,6 +16,7 @@ import com.salih.weatherapp.R
 import com.salih.weatherapp.adapter.SelectedLocationRecyclerAdapter
 import com.salih.weatherapp.model.WeatherModel
 import com.salih.weatherapp.model.result
+import com.salih.weatherapp.util.addLocationSelected
 import com.salih.weatherapp.viewModel.SelectedLocationViewModel
 import kotlinx.android.synthetic.main.fragment_selected_location.*
 import kotlinx.android.synthetic.main.l_recycler_row.*
@@ -55,10 +56,21 @@ class SelectedLocation : Fragment() {
         var cityname = "Trabzon"
         val lang = "tr"
         recyclerSelectedLocationAdapter.changeLocation(cityname)
-         /*arguments?.let {
-             val currentcity = SelectedLocationArgs.fromBundle(it).cityname
-             prefence.edit().putString("cityname2",currentcity).apply()
-         }*/
+
+        arguments?.let {
+            val currentcity = SelectedLocationArgs.fromBundle(it).cityname
+            if(currentcity == "Trabzon"){
+                prefence.edit().putString("cityname4", addLocationSelected()).apply()
+                val city = prefence.getString("cityname4","ankara")
+                city?.let {
+                    recyclerSelectedLocationAdapter.changeLocation(city)
+                }
+            }else{
+                prefence.edit().putString("cityname2", currentcity).apply()
+                recyclerSelectedLocationAdapter.changeLocation(currentcity)
+            }
+
+        }
 
         // cityname = prefence.getString("cityname2","trabzon").toString()
 
