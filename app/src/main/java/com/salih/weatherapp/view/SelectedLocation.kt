@@ -2,6 +2,7 @@ package com.salih.weatherapp.view
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -51,7 +52,10 @@ class SelectedLocation : Fragment() {
             prefence = it.getSharedPreferences(it.packageName, Context.MODE_PRIVATE)
         }
         var cityname = ""
-        val lang = "tr"
+        var clang = ""
+        clang = Resources.getSystem().configuration.locale.language
+        prefence.edit().putString("langSL",clang).apply()
+
         recyclerSelectedLocationAdapter.changeLocation(cityname)
 
         arguments?.let {
@@ -68,8 +72,11 @@ class SelectedLocation : Fragment() {
         }
 
         cityname = prefence.getString("citynameSL", "ankara").toString()
+        var lang = prefence.getString("langSL","en")
 
-        viewModel.refleshData(lang, cityname)
+        if(lang != null && cityname != null){
+            viewModel.refleshData(lang, cityname)
+        }
 
         selectedLocationRecycler.layoutManager = LinearLayoutManager(context)
         selectedLocationRecycler.adapter = recyclerSelectedLocationAdapter
@@ -79,7 +86,10 @@ class SelectedLocation : Fragment() {
             slProgressBar.visibility = View.VISIBLE
             selectedLocationRecycler.visibility = View.GONE
             swipeRefleshLayout2.isRefreshing = false
-            viewModel.refleshData(lang, cityname)
+            if (lang != null && cityname != null){
+                viewModel.refleshData(lang, cityname)
+            }
+
         }
         observeLiveData()
 

@@ -89,7 +89,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     }
 
                     override fun onQueryTextChange(p0: String?): Boolean {
-                        println("girdi")
+
                         return false
                     }
                 })

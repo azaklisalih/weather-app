@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
@@ -81,9 +82,12 @@ class LocationFragment : Fragment() {
                 recyclerLocationAdapter.changeLocation(currentCity)
             }
         }
+        currentLng= Resources.getSystem().configuration.locale.language
+        prefence.edit().putString("langL",currentLng)
+        println(currentLng)
 
         var cityname = prefence.getString("citynameL", "ankara")
-        var lang = prefence.getString("lang", "tr")
+        var lang = prefence.getString("langL", "en")
 
         if (lang != null && cityname != null) {
             viewModel.refleshData(lang, cityname)
@@ -100,7 +104,7 @@ class LocationFragment : Fragment() {
 
             prefence.edit().putString("cityname2", addLocation())
 
-            var g_currentLng = prefence.getString("lang2", lang)
+            var g_currentLng = prefence.getString("langL", "en")
             var g_currentCity = prefence.getString("cityname2", cityname)
             if (g_currentCity != null && g_currentLng != null) {
                 viewModel.refleshData(g_currentLng, g_currentCity)
